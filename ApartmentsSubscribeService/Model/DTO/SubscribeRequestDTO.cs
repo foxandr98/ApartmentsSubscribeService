@@ -2,7 +2,7 @@
 
 namespace ApartmentsSubscribeService.Model.DTO
 {
-    public class SubscribeDTO
+    public class SubscribeRequestDTO
     {
         [Required(ErrorMessage = "Email не может быть пустым!")]
         [EmailAddress(ErrorMessage = "Ваш email имеет некорректный формат!")]

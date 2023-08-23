@@ -1,30 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace ApartmentsSubscribeService.Model.DataBase
 {
     public class ApplicationContext : DbContext
     {
-        private readonly ILoggerFactory _loggerFactory;
         public DbSet<User> Users { get; set; } = null!;
 
         public DbSet<Apartment> Apartments { get; set; } = null!;
 
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
-        }
-
-        public ApplicationContext(ILoggerFactory loggerFactory) {
-            _loggerFactory = loggerFactory;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLoggerFactory(_loggerFactory);
             optionsBuilder.UseSqlite("Data Source=apartments_subscribe_service.db");
+            optionsBuilder.LogTo(message => Debug.WriteLine(message), LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
