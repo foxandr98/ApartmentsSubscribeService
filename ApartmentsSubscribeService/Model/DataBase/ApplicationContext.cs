@@ -1,10 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApartmentsSubscribeService.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace ApartmentsSubscribeService.Model.DataBase
 {
     public class ApplicationContext : DbContext
     {
+        private readonly ILogger _logger;
+        public ApplicationContext(ILogger logger)
+        {
+            _logger = logger;
+        }
         public DbSet<User> Users { get; set; } = null!;
 
         public DbSet<Apartment> Apartments { get; set; } = null!;
@@ -18,7 +25,10 @@ namespace ApartmentsSubscribeService.Model.DataBase
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=apartments_subscribe_service.db");
-            optionsBuilder.LogTo(message => Debug.WriteLine(message), LogLevel.Information);
+            if (_logger != null)
+            {
+                optionsBuilder.LogTo(message => _logger.LogInformation(message), LogLevel.Information);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
