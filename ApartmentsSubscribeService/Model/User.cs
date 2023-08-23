@@ -11,9 +11,27 @@ namespace ApartmentsSubscribeService.Model
 
         [Required]
         [MaxLength(100)]
+        [EmailAddress]
         public string Email { get; set; } = null!;
 
-        public List<Apartment> Apartments { get; set; } = new();
-        public List<UsersApartments> UsersApartments { get; set; } = new();
+        public User(string email)
+        {
+            Email = email;
+        }
+        public User() { }
+
+        public List<Apartment> Apartments { get; set; } = null!;
+        public List<UsersApartments> UsersApartments { get; set; } = null!;
+
+        public override bool Equals(object? obj)
+        {
+            return obj is User user &&
+                   Email == user.Email;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Email);
+        }
     }
 }
