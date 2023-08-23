@@ -12,6 +12,7 @@ namespace ApartmentsSubscribeService.Model.DTO
         [Required(ErrorMessage = "URL не может быть пустым!")]
         [Url(ErrorMessage = "Ваш URL имеет некорректный формат!")]
         [MaxLength(100, ErrorMessage = "Длина ссылки не может быть длинее 100 символов!")]
+        [RegularExpression("^https://prinzip.su/apartments/.+")]
         public string Url { get; set; } = null!;
     }
 }
