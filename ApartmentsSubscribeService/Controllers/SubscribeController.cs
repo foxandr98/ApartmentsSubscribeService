@@ -68,7 +68,7 @@ namespace ApartmentsSubscribeService.Controllers
                     var stringPriceWithRubles = driver.FindElements(By.ClassName("flat-prices__block-current"))[1].Text;
                     var parsedPrice = Regex.Replace(stringPriceWithRubles, "\\s+|₽", "");
                     sw.Stop();
-                    _logger.LogInformation("Парсинг сайта длился: {}", sw.ElapsedMilliseconds);
+                    _logger.LogInformation("Парсинг сайта длился: {} миллисекунд", sw.ElapsedMilliseconds);
                     pricesByUrl.Add(url, UInt32.Parse(parsedPrice));
                 }
             }
